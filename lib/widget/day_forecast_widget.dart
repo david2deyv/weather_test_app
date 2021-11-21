@@ -35,7 +35,7 @@ class DaysForecastWidget extends StatelessWidget {
                     return Dialog(
                       elevation: 16,
                       child: Container(
-                        color: Colors.blueGrey,
+                        color: Theme.of(context).primaryColor,
                         height: 400.0,
                         width: 360.0,
                         child: Column(

@@ -19,6 +19,7 @@ class WrongCityState extends ForecastState {
   final String message;
 
   WrongCityState({required this.message});
+
   @override
   List<Object> get props => [message];
 }
@@ -41,13 +42,14 @@ class ChangeCityState extends ForecastState {
   List<Object> get props => [city];
 }
 
+class LogOut extends ForecastState{}
 
 extension AuthStateExtention on ForecastState {
   List<Object> get getProps {
     final state = this;
-    if(state is ChangeCityState) return state.props;
-    if(state is ErrorState) return state.props;
-    if(state is WrongCityState) return state.props;
+    if (state is ChangeCityState) return state.props;
+    if (state is ErrorState) return state.props;
+    if (state is WrongCityState) return state.props;
     return [];
   }
 }

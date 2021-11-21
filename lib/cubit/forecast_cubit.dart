@@ -69,4 +69,8 @@ class ForecastCubit extends Cubit<ForecastState> {
     }
   }
 
+  void logOut(){
+    emit(LogOut());
+  }
+
 }

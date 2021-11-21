@@ -1,7 +1,7 @@
-// import 'package:anim_search_bar/anim_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_test_app/api/weather_repository.dart';
+import 'package:weather_test_app/cubit/auth/auth_cubit.dart';
 import 'package:weather_test_app/cubit/forecast_cubit.dart';
 import 'package:weather_test_app/models/weather_forecast_daily_one.dart';
 import 'package:weather_test_app/widget/city_view.dart';
@@ -34,10 +34,27 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) =>
-          ForecastCubit(WeatherRepositoryImpl())..firstLoadWeather(),
-      child: BlocConsumer<ForecastCubit, ForecastState>(
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) =>
+              ForecastCubit(WeatherRepositoryImpl())..firstLoadWeather(),
+        ),
+        BlocProvider<AuthCubit>(
+          create: (context) => AuthCubit()..initial(),
+        ),
+      ],
+      child: MultiBlocListener(listeners: [
+        BlocListener<AuthCubit, AuthState> (
+          listener: (context, state) {
+            if(state is AuthLogOutState){
+              Navigator.of(context, rootNavigator: true).pop();
+              Navigator.pushNamed(context, '\login_page');
+            }
+          },
+        ),
+
+      ], child: BlocConsumer<ForecastCubit, ForecastState>(
         listener: (context, state) {
           if (state is WrongCityState || state is ErrorState) {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -66,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
             final ForecastItem currentForecast = weatherForecast.list!.first;
             final City city = weatherForecast.city!;
             final DateTime date =
-                DateTime.fromMillisecondsSinceEpoch(currentForecast.dt! * 1000);
+            DateTime.fromMillisecondsSinceEpoch(currentForecast.dt! * 1000);
 
             body = Container(
               decoration: decoration,
@@ -108,8 +125,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   ListTile(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-
+                    contentPadding:
+                    EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
                     title: Text(
                       'Show details',
                       style: TextStyle(fontSize: 20),
@@ -126,15 +143,22 @@ class _HomeScreenState extends State<HomeScreen> {
                           print(isSwitched);
                         });
                       },
-                      activeTrackColor: Colors.blueGrey,
+                      activeTrackColor: Theme.of(context).primaryColor,
                       activeColor: Colors.white,
                     ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      context.read<AuthCubit>().logOut();
+                      // context.read<ForecastCubit>().logOut();
+                    },
+                    child: Text('Log Out'),
                   ),
                 ],
               ),
             ),
             appBar: AppBar(
-              backgroundColor: Colors.blueGrey,
+              backgroundColor: Theme.of(context).primaryColor,
               title: Text('Weather App'),
               actions: [
                 IconButton(
@@ -148,8 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         },
       ),
-      // ),
-      //
+      ),
     );
   }
 

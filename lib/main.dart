@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:weather_test_app/screen/home_screen.dart';
+import 'package:weather_test_app/screen/login_page.dart';
 import 'package:weather_test_app/screen/spalsh_screen.dart';
 
 void main() {
@@ -29,11 +29,32 @@ class MyApp extends StatelessWidget {
         } else {
           // Loading is done, return the app:
           return MaterialApp(
+            onUnknownRoute: (settings) => CupertinoPageRoute(
+                builder: (context) {
+                  return SplashScreen();
+                }
+            ),
+            onGenerateRoute: (settings) {
+              if (settings.name == '\home_page') {
+                return CupertinoPageRoute(
+                  title: "MyPage",
+                  settings: settings,
+                  builder: (context) => HomeScreen(),
+                );
+              }
+              if (settings.name == '\login_page') {
+                return CupertinoPageRoute(
+                  title: "MyPage",
+                  settings: settings,
+                  builder: (context) => SignInPage(),
+                );
+              }
+            },
             title: 'Weather App',
             theme: ThemeData(
-              primarySwatch: Colors.blue,
+              primarySwatch: Colors.blueGrey,
             ),
-            home:  HomeScreen(),
+            home:  SignInPage(),
           );
         }
       },
