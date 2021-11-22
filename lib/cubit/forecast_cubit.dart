@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -45,7 +46,7 @@ class ForecastCubit extends Cubit<ForecastState> {
     emit(LoadingState());
     try {
       final WeatherForecast forecast =
-          await _repository.getWeatherApi(target: _newTarget);
+      await _repository.getWeatherApi(target: _newTarget);
       emit(LoadedState(forecast));
       _target = _newTarget;
     } on WrongCityException catch (_) {
@@ -60,17 +61,16 @@ class ForecastCubit extends Cubit<ForecastState> {
     emit(LoadingState());
     try {
       final WeatherForecast forecast =
-          await _repository.getWeatherApi(target: _target);
+      await _repository.getWeatherApi(target: _target);
       emit(LoadedState(forecast));
     } on WrongCityException catch (_) {
       emit(WrongCityState(message: 'No city detected'));
+    } on SocketException catch (e) {
     } catch (e) {
       emit(ErrorState(message: e.toString()));
     }
   }
-
-  void logOut(){
-    emit(LogOut());
-  }
-
 }
+
+
+
