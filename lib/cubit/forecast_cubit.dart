@@ -19,7 +19,7 @@ class ForecastCubit extends Cubit<ForecastState> {
   ForecastCubit(this._repository) : super(LoadingState()) {}
 
   Future<void> changeCityEvent(String city) async {
-    // emit(LoadingState());
+    emit(LoadingState());
     if (city != '') {
       _newTarget = WeatherTargetCity(city);
       loadWeather();
@@ -30,7 +30,7 @@ class ForecastCubit extends Cubit<ForecastState> {
   }
 
   Future<void> loadWeatherByLocation() async {
-    // emit(LoadingState());
+    emit(LoadingState());
     try {
       Location location = Location();
       await location.getCurrentLocation();

@@ -208,14 +208,6 @@ class _AnimSearchBarState extends State<AnimSearchBar>
                     onSubmitted: (value) {
                       widget.onSuffixTap();
                     },
-                    onEditingComplete: () {
-                      /// on editing complete the keyboard will be closed and the search bar will be closed
-                      // unfocusKeyboard();
-                      // setState(() {
-                      //   toggle = 0;
-                      // });
-                    },
-
                     ///style is of type TextStyle, the default is just a color black
                     style: widget.style != null
                         ? widget.style

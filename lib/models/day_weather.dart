@@ -44,7 +44,6 @@ class DayWeather {
     return tempMin / forecastList.length;
   }
 
-  // todo implement
   double get averageTempMax {
     double tempMax = 0;
     forecastList.forEach((forecast) => tempMax += forecast.main!.tempMax!);
