@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:weather_test_app/models/day_weather.dart';
 import 'package:weather_test_app/utilites/forecast_util.dart';
@@ -40,9 +41,10 @@ Widget forecastCard(DayWeather dayWeather, BuildContext context) {
     ),
     Padding(
       padding: EdgeInsets.only(bottom: 25),
-      child: Image.network(
-        dayWeather.iconUrl,
-        scale: 0.8,
+      child: CachedNetworkImage(
+        imageUrl: dayWeather.iconUrl,
+        height: 80,
+        width: 80,
         color: color,
       ),
     ),
