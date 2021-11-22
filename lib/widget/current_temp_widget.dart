@@ -5,7 +5,11 @@ class CurrentTempWidget extends StatelessWidget {
   final ForecastItem forecast;
   final String? averageTemp;
 
-  const CurrentTempWidget({Key? key, required this.forecast, this.averageTemp,}) : super(key: key);
+  const CurrentTempWidget({
+    Key? key,
+    required this.forecast,
+    this.averageTemp,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,12 +18,10 @@ class CurrentTempWidget extends StatelessWidget {
     final String temp = averageTemp ?? forecast.main!.temp!.toStringAsFixed(0);
     final String description = forecast.weather![0].description!.toUpperCase();
 
-
     return Padding(
       padding: EdgeInsets.only(bottom: 20),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
+      child:
+          Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
@@ -34,9 +36,10 @@ class CurrentTempWidget extends StatelessWidget {
                 ),
               ],
             ),
-            Image.network(
-              icon,
-              scale: 0.5,
+            CachedNetworkImage(
+              imageUrl: icon,
+              height: 120,
+              width: 120,
               color: color,
             ),
           ],
