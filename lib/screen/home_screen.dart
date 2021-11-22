@@ -8,7 +8,7 @@ import 'package:weather_test_app/widget/city_view.dart';
 import 'package:weather_test_app/widget/current_temp_widget.dart';
 import 'package:weather_test_app/widget/day_forecast_widget.dart';
 import 'package:weather_test_app/widget/detail_view_widget.dart';
-import 'package:weather_test_app/models/search_bar.dart';
+import 'package:weather_test_app/widget/search_bar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
