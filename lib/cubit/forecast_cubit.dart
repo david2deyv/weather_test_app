@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -18,6 +19,7 @@ class ForecastCubit extends Cubit<ForecastState> {
   ForecastCubit(this._repository) : super(LoadingState());
 
   Future<void> changeCityEvent(String city) async {
+    // emit(LoadingState());
     if (city != '') {
       _newTarget = WeatherTargetCity(city);
       loadWeather();
@@ -28,7 +30,7 @@ class ForecastCubit extends Cubit<ForecastState> {
   }
 
   Future<void> loadWeatherByLocation() async {
-    emit(LoadingState());
+    // emit(LoadingState());
     try {
       Location location = Location();
       await location.getCurrentLocation();
@@ -51,7 +53,11 @@ class ForecastCubit extends Cubit<ForecastState> {
     } on WrongCityException catch (_) {
       emit(WrongCityState(message: 'No city detected'));
       firstLoadWeather();
-    } catch (e) {
+    } on SocketException catch (e) {
+      final lastKnownForecast = await _repository.getLastCachedResult();
+      emit(ErrorState(message: 'no internet connection'));
+      emit(LoadedState(lastKnownForecast));
+    }catch (e) {
       emit(ErrorState(message: e.toString()));
     }
   }

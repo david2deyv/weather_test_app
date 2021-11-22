@@ -23,6 +23,6 @@ class WeatherRepositoryImpl implements WeatherRepository {
 class WeatherRepositoryMock implements WeatherRepository {
   @override
   Future<WeatherForecast> getWeatherApi({WeatherTarget? target}) async {
-    return WeatherForecast(city: City(name: 'London', country: 'EN'));
+    return WeatherForecast(city: City(name: 'Kiev', country: 'UA'));
   }
 }
