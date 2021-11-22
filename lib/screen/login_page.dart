@@ -58,7 +58,7 @@ class _SignInPageState extends State<SignInPage> {
             return Column(
               children: [
                 if (state is AuthRegistration)
-                  registration("REGISTRATION", context),
+                  _registration("REGISTRATION", context),
                 if (state is AuthInitial) _signInPage('SIGN IN', context),
               ],
             );
@@ -68,7 +68,7 @@ class _SignInPageState extends State<SignInPage> {
     );
   }
 
-  Widget registration(String textButton, BuildContext context) {
+  Widget _registration(String textButton, BuildContext context) {
     return Expanded(
       child: ListView(
         children: [
@@ -87,7 +87,7 @@ class _SignInPageState extends State<SignInPage> {
               ),
             ),
           ),
-          form(textButton, context),
+          _form(textButton, context),
           Padding(
             padding: EdgeInsets.only(top: 10),
             child: Row(
@@ -122,40 +122,6 @@ class _SignInPageState extends State<SignInPage> {
     );
   }
 
-  Widget verify(String textButton, BuildContext context) {
-    return Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          const Center(
-            child: Padding(
-              padding: EdgeInsets.only(top: 25),
-              child: Text(
-                'Please confirm your email!\n'
-                    'An email has been sent to you!',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
-              ),
-            ),
-          ),
-          // Spacer(),
-          Padding(
-            padding: EdgeInsets.only(left: 20, right: 20, bottom: 25),
-            child: Container(
-              height: 50,
-              width: MediaQuery.of(context).size.width,
-              child: button(textButton, context),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _signInPage(String textButton, BuildContext context) {
     return Expanded(
       child: ListView(
@@ -175,7 +141,7 @@ class _SignInPageState extends State<SignInPage> {
               ),
             ),
           ),
-          form(textButton, context),
+          _form(textButton, context),
           Padding(
             padding: EdgeInsets.only(top: 10),
             child: Row(
@@ -209,7 +175,7 @@ class _SignInPageState extends State<SignInPage> {
     );
   }
 
-  Widget button(String text, BuildContext context) {
+  Widget _button(String text, BuildContext context) {
     return ElevatedButton(
       onPressed: () {
         if (text == 'SIGN IN') {
@@ -224,13 +190,13 @@ class _SignInPageState extends State<SignInPage> {
     );
   }
 
-  Widget form(String label, BuildContext context) {
+  Widget _form(String label, BuildContext context) {
     return Container(
       child: Column(
         children: [
           Padding(
             padding: EdgeInsets.only(bottom: 25),
-            child: input(
+            child: _input(
               icon: Icon(Icons.email_outlined),
               controller: _emailController,
               hint: 'EMAIL',
@@ -239,7 +205,7 @@ class _SignInPageState extends State<SignInPage> {
           ),
           Padding(
             padding: EdgeInsets.only(bottom: 25),
-            child: input(
+            child: _input(
               icon: Icon(Icons.lock),
               controller: _passwordController,
               hint: 'PASSWORD',
@@ -249,7 +215,7 @@ class _SignInPageState extends State<SignInPage> {
           if (showLogin)
             Padding(
               padding: EdgeInsets.only(bottom: 25),
-              child: input(
+              child: _input(
                 icon: Icon(Icons.lock),
                 controller: _passwordConfirmationController,
                 hint: 'PASSWORD CONFIRMATION',
@@ -264,7 +230,7 @@ class _SignInPageState extends State<SignInPage> {
             child: Container(
               height: MediaQuery.of(context).size.height * 0.055,
               width: MediaQuery.of(context).size.width,
-              child: button(label, context),
+              child: _button(label, context),
             ),
           ),
         ],
@@ -272,7 +238,7 @@ class _SignInPageState extends State<SignInPage> {
     );
   }
 
-  Widget input(
+  Widget _input(
       {Icon? icon,
         String? hint,
         TextEditingController? controller,

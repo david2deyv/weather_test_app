@@ -92,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     Container(
                       height: MediaQuery.of(context).size.height * 0.12,
-                      child: searchBar(context),
+                      child: _searchBar(context),
                     ),
                     Expanded(
                       child: ListView(children: [
@@ -115,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
               );
             }
             return Scaffold(
-              drawer: drawer(context),
+              drawer: _drawer(context),
               appBar: AppBar(
                 backgroundColor: Theme.of(context).primaryColor,
                 title: Text('Weather App'),
@@ -135,7 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget searchBar(BuildContext context) {
+  Widget _searchBar(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(
         left: 16,
@@ -161,7 +161,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget drawer(BuildContext context) {
+  Widget _drawer(BuildContext context) {
     return Drawer(
       child: Column(
         children: [
